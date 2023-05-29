@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('status');
             $table->foreignId('uniform_id');
             $table->foreignId('club_id');

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ClubResource\RelationManagers;
 
 use App\Models\Club;
+use App\Models\Location;
 use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
@@ -15,6 +16,8 @@ use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -32,20 +35,20 @@ class ActivitiesRelationManager extends RelationManager
 
         return $form
             ->schema([
-                Section::make('Activity Detail')
-                    ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\DateTimePicker::make('start_at')
-                            ->required(),
-                        Forms\Components\DateTimePicker::make('end_at')
-                            ->required(),
-                        Forms\Components\FileUpload::make('image_path'),
-                        Forms\Components\TextInput::make('location_id')
-                            ->required()
-                            ->numeric(),
-                    ])->columns(2),
+                // Section::make('Activity Detail')
+                //     ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DateTimePicker::make('start_at')
+                    ->required(),
+                Forms\Components\DateTimePicker::make('end_at')
+                    ->required(),
+                Forms\Components\FileUpload::make('image_path'),
+                Forms\Components\Select::make('location_id')
+                    ->required()
+                    ->options(Location::all()->pluck('name', 'id')),
+                // ])->columns(2),
 
                 Section::make('Attendance')
                     ->schema(function ($component, ?Model $record) {
@@ -69,6 +72,7 @@ class ActivitiesRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
+                TextColumn::make('location.name'),
                 Tables\Columns\TextColumn::make('start_at'),
                 Tables\Columns\TextColumn::make('end_at'),
             ])
@@ -79,6 +83,8 @@ class ActivitiesRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
+                // Action::make('attendance')
+                //     ->icon('heroicon-o-plus-circle'),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

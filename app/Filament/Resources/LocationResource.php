@@ -2,15 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ClubResource\Pages;
-use App\Filament\Resources\ClubResource\RelationManagers;
-use App\Filament\Resources\ClubResource\RelationManagers\ActivitiesRelationManager;
-use App\Models\Club;
-use App\Models\User;
+use App\Filament\Resources\LocationResource\Pages;
+use App\Filament\Resources\LocationResource\RelationManagers;
+use App\Models\Location;
 use Filament\Forms;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -18,15 +13,15 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClubResource extends Resource
+class LocationResource extends Resource
 {
-    protected static ?string $model = Club::class;
+    protected static ?string $model = Location::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationIcon = 'heroicon-o-location-marker';
 
     protected static ?string $navigationGroup = 'Co-curriculum';
 
-
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -35,10 +30,6 @@ class ClubResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Select::make('user_id')
-                    ->label('Person In Charge')
-                    ->options(User::all()->pluck('name', 'id'))
-                    ->searchable(),
             ]);
     }
 
@@ -47,9 +38,8 @@ class ClubResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->label('Person In Charge')
-                    ->formatStateUsing(fn ($state): ?string => User::find($state)?->name ?? null),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
@@ -57,30 +47,28 @@ class ClubResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
+    
     public static function getRelations(): array
     {
         return [
-            ActivitiesRelationManager::class,
+            //
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListClubs::route('/'),
-            'create' => Pages\CreateClub::route('/create'),
-            'view' => Pages\ViewClub::route('/{record}'),
-            'edit' => Pages\EditClub::route('/{record}/edit'),
+            'index' => Pages\ListLocations::route('/'),
+            'create' => Pages\CreateLocation::route('/create'),
+            'edit' => Pages\EditLocation::route('/{record}/edit'),
         ];
-    }
+    }    
 
     protected static function getNavigationBadge(): ?string
     {

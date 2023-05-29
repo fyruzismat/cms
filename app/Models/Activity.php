@@ -28,4 +28,9 @@ class Activity extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }

@@ -23,7 +23,7 @@ class UniformResource extends Resource
 {
     protected static ?string $model = Uniform::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
+    protected static ?string $navigationIcon = 'heroicon-o-light-bulb';
 
     protected static ?string $navigationGroup = 'Co-curriculum';
 
@@ -81,5 +81,10 @@ class UniformResource extends Resource
             'view' => Pages\ViewUniform::route('/{record}'),
             'edit' => Pages\EditUniform::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

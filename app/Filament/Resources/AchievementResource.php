@@ -19,6 +19,9 @@ class AchievementResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static bool $shouldRegisterNavigation = false;
+    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -60,14 +63,14 @@ class AchievementResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -75,5 +78,5 @@ class AchievementResource extends Resource
             'create' => Pages\CreateAchievement::route('/create'),
             'edit' => Pages\EditAchievement::route('/{record}/edit'),
         ];
-    }    
+    }
 }

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->foreignId('uniform_id');
-            $table->foreignId('club_id');
-            $table->foreignId('sport_id');
+            $table->foreignId('uniform_id')->nullable();
+            $table->foreignId('club_id')->nullable();
+            $table->foreignId('sport_id')->nullable();
             $table->timestamps();
         });
     }

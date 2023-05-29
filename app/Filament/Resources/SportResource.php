@@ -22,7 +22,7 @@ class SportResource extends Resource
 {
     protected static ?string $model = Sport::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-variable';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
 
     protected static ?string $navigationGroup = 'Co-curriculum';
 
@@ -80,5 +80,10 @@ class SportResource extends Resource
             'view' => Pages\ViewSport::route('/{record}'),
             'edit' => Pages\EditSport::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

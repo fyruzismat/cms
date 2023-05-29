@@ -18,7 +18,7 @@ class ActivityPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view_any_activity');
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class ActivityPolicy
      */
     public function view(User $user, Activity $activity)
     {
-        return $user->can('view_activity');
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class ActivityPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create_activity');
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class ActivityPolicy
      */
     public function update(User $user, Activity $activity)
     {
-        return $user->can('update_activity');
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class ActivityPolicy
      */
     public function delete(User $user, Activity $activity)
     {
-        return $user->can('delete_activity');
+        return true;
     }
 
     /**
@@ -76,7 +76,7 @@ class ActivityPolicy
      */
     public function deleteAny(User $user)
     {
-        return $user->can('delete_any_activity');
+        return true;
     }
 
     /**
@@ -145,7 +145,6 @@ class ActivityPolicy
      */
     public function reorder(User $user)
     {
-        return $user->can('reorder_activity');
+        return true;
     }
-
 }

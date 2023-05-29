@@ -25,9 +25,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $navigationGroup = 'User Management';
+
+    protected static ?string $navigationLabel = 'Teachers';
 
     public static function form(Form $form): Form
     {
@@ -46,7 +48,7 @@ class UserResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            
+
                             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
                             ->minLength(8)
                             ->same('passwordConfirmation')
@@ -114,5 +116,10 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
